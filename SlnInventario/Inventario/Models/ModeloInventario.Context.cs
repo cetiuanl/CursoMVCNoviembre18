@@ -12,21 +12,16 @@ namespace Inventario.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class dbInventarioEntities : DbContext
     {
-#if DEBUG
         public dbInventarioEntities()
             : base("name=dbInventarioEntities")
         {
         }
-#else
-        public dbInventarioEntities()
-            : base("name=dbInventarioEntitiesProduccion")
-        {
-        }
-#endif
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -34,5 +29,14 @@ namespace Inventario.Models
     
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
+    
+        public virtual ObjectResult<ObtenerCategorias_Result> ObtenerCategorias(Nullable<bool> soloActivos)
+        {
+            var soloActivosParameter = soloActivos.HasValue ?
+                new ObjectParameter("SoloActivos", soloActivos) :
+                new ObjectParameter("SoloActivos", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerCategorias_Result>("ObtenerCategorias", soloActivosParameter);
+        }
     }
 }
