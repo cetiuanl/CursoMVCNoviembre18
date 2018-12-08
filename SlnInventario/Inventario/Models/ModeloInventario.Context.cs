@@ -27,8 +27,14 @@ namespace Inventario.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Categoria> Categorias { get; set; }
-        public virtual DbSet<Producto> Productos { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<DetalleFactura> DetalleFactura { get; set; }
+        public virtual DbSet<Factura> Factura { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Telefono> Telefono { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual ObjectResult<ObtenerCategorias_Result> ObtenerCategorias(Nullable<bool> soloActivos)
         {

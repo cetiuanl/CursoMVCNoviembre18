@@ -14,16 +14,26 @@ namespace Inventario.Models
     
     public partial class Producto
     {
-        public int idProducto { get; set; }
-        public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public int cantidad { get; set; }
-        public string marca { get; set; }
-        public System.DateTime fechaCreacion { get; set; }
-        public int idCategoria { get; set; }
-        public bool esActivo { get; set; }
-        public string unidadMedida { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Producto()
+        {
+            this.DetalleFactura = new HashSet<DetalleFactura>();
+        }
     
-        public virtual Categoria Categorias { get; set; }
+        public int IdProducto { get; set; }
+        public int IdCategoria { get; set; }
+        public string Nombre { get; set; }
+        public int Cantidad_Stock { get; set; }
+        public int Descripcion { get; set; }
+        public string Marca { get; set; }
+        public string Talla { get; set; }
+        public double PrecioMayor { get; set; }
+        public double PrecioDetalle { get; set; }
+        public double PrecioCosto { get; set; }
+        public string Color { get; set; }
+    
+        public virtual Categoria Categoria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleFactura> DetalleFactura { get; set; }
     }
 }

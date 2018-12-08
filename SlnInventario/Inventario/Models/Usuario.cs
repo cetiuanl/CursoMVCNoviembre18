@@ -12,18 +12,14 @@ namespace Inventario.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Categoria
+    public partial class Usuario
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categoria()
-        {
-            this.Producto = new HashSet<Producto>();
-        }
-    
-        public int IdCategoria { get; set; }
+        public int IdUsuario { get; set; }
+        public int IdRol { get; set; }
         public string Nombre { get; set; }
+        public string Cuenta { get; set; }
+        public string Contraseña { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual Rol Rol { get; set; }
     }
 }
