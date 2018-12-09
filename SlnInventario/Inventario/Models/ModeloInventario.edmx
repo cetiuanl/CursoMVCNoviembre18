@@ -9,24 +9,25 @@
           <Key>
             <PropertyRef Name="IdCategoria" />
           </Key>
-          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
-            <PropertyRef Name="Id_Cliente" />
+            <PropertyRef Name="IdCliente" />
           </Key>
-          <Property Name="Id_Cliente" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Direccion" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="Telefono" Type="int" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RFC" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DetalleFactura">
           <Key>
             <PropertyRef Name="IdDetalle" />
           </Key>
-          <Property Name="IdDetalle" Type="int" Nullable="false" />
+          <Property Name="IdDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdFactura" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
@@ -36,21 +37,20 @@
           <Key>
             <PropertyRef Name="IdFactura" />
           </Key>
-          <Property Name="IdFactura" Type="int" Nullable="false" />
+          <Property Name="IdFactura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCliente" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="PrecioTotal" Type="float" Nullable="false" />
           <Property Name="NombreTienda" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefono" Type="int" Nullable="false" />
-          <Property Name="Ubicacion" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="80" Nullable="false" />
-          <Property Name="Facebook" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estatus" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCategoria" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Cantidad_Stock" Type="int" Nullable="false" />
@@ -66,39 +66,19 @@
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
-          <Property Name="IdRol" Type="int" Nullable="false" />
+          <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Telefono">
-          <Key>
-            <PropertyRef Name="IdTelefono" />
-          </Key>
-          <Property Name="IdTelefono" Type="int" Nullable="false" />
-          <Property Name="TelefonoCasa" Type="int" />
-          <Property Name="TelefonoCelular" Type="int" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
-          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdRol" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Cuenta" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Contraseña" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Cliente_Telefono">
-          <End Role="Telefono" Type="Self.Telefono" Multiplicity="1" />
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Telefono">
-              <PropertyRef Name="IdTelefono" />
-            </Principal>
-            <Dependent Role="Cliente">
-              <PropertyRef Name="Telefono" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DetalleFactura_DetalleFactura">
           <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
           <End Role="DetalleFactura" Type="Self.DetalleFactura" Multiplicity="*" />
@@ -123,18 +103,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Factura_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="Id_Cliente" />
-            </Principal>
-            <Dependent Role="Factura">
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_Categoria">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -144,18 +112,6 @@
             </Principal>
             <Dependent Role="Producto">
               <PropertyRef Name="IdCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Telefono_Telefono">
-          <End Role="Telefono" Type="Self.Telefono" Multiplicity="1" />
-          <End Role="Telefono1" Type="Self.Telefono" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Telefono">
-              <PropertyRef Name="IdTelefono" />
-            </Principal>
-            <Dependent Role="Telefono1">
-              <PropertyRef Name="IdTelefono" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -171,9 +127,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="ObtenerCategorias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SoloActivos" Type="bit" Mode="In" />
-        </Function>
         <EntityContainer Name="dbInventarioModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
@@ -181,12 +134,7 @@
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Telefono" EntityType="Self.Telefono" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Cliente_Telefono" Association="Self.FK_Cliente_Telefono">
-            <End Role="Telefono" EntitySet="Telefono" />
-            <End Role="Cliente" EntitySet="Cliente" />
-          </AssociationSet>
           <AssociationSet Name="FK_DetalleFactura_DetalleFactura" Association="Self.FK_DetalleFactura_DetalleFactura">
             <End Role="Factura" EntitySet="Factura" />
             <End Role="DetalleFactura" EntitySet="DetalleFactura" />
@@ -195,17 +143,9 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="DetalleFactura" EntitySet="DetalleFactura" />
           </AssociationSet>
-          <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Factura" EntitySet="Factura" />
-          </AssociationSet>
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Telefono_Telefono" Association="Self.FK_Telefono_Telefono">
-            <End Role="Telefono" EntitySet="Telefono" />
-            <End Role="Telefono1" EntitySet="Telefono" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -226,19 +166,10 @@
           <EntitySet Name="Factura" EntityType="dbInventarioModel.Factura" />
           <EntitySet Name="Producto" EntityType="dbInventarioModel.Producto" />
           <EntitySet Name="Rol" EntityType="dbInventarioModel.Rol" />
-          <EntitySet Name="Telefono" EntityType="dbInventarioModel.Telefono" />
           <EntitySet Name="Usuario" EntityType="dbInventarioModel.Usuario" />
           <AssociationSet Name="FK_Producto_Categoria" Association="dbInventarioModel.FK_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Telefono" Association="dbInventarioModel.FK_Cliente_Telefono">
-            <End Role="Telefono" EntitySet="Telefono" />
-            <End Role="Cliente" EntitySet="Cliente" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factura_Cliente" Association="dbInventarioModel.FK_Factura_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Factura" EntitySet="Factura" />
           </AssociationSet>
           <AssociationSet Name="FK_DetalleFactura_DetalleFactura" Association="dbInventarioModel.FK_DetalleFactura_DetalleFactura">
             <End Role="Factura" EntitySet="Factura" />
@@ -252,11 +183,7 @@
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Telefono_Telefono" Association="dbInventarioModel.FK_Telefono_Telefono">
-            <End Role="Telefono" EntitySet="Telefono" />
-            <End Role="Telefono1" EntitySet="Telefono" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="ObtenerCategorias_Result">
           <Property Type="Int32" Name="idCategoria" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
@@ -267,27 +194,26 @@
           <Key>
             <PropertyRef Name="IdCategoria" />
           </Key>
-          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Producto" Relationship="dbInventarioModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
-            <PropertyRef Name="Id_Cliente" />
+            <PropertyRef Name="IdCliente" />
           </Key>
-          <Property Name="Id_Cliente" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Telefono1" Relationship="dbInventarioModel.FK_Cliente_Telefono" FromRole="Cliente" ToRole="Telefono" />
-          <NavigationProperty Name="Factura" Relationship="dbInventarioModel.FK_Factura_Cliente" FromRole="Cliente" ToRole="Factura" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RFC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DetalleFactura">
           <Key>
             <PropertyRef Name="IdDetalle" />
           </Key>
-          <Property Name="IdDetalle" Type="Int32" Nullable="false" />
+          <Property Name="IdDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdFactura" Type="Int32" Nullable="false" />
           <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
@@ -299,23 +225,21 @@
           <Key>
             <PropertyRef Name="IdFactura" />
           </Key>
-          <Property Name="IdFactura" Type="Int32" Nullable="false" />
+          <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdCliente" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PrecioTotal" Type="Double" Nullable="false" />
           <Property Name="NombreTienda" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="Int32" Nullable="false" />
-          <Property Name="Ubicacion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="Correo" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="Facebook" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cliente" Relationship="dbInventarioModel.FK_Factura_Cliente" FromRole="Factura" ToRole="Cliente" />
+          <Property Name="Estatus" Type="Byte" Nullable="false" />
           <NavigationProperty Name="DetalleFactura" Relationship="dbInventarioModel.FK_DetalleFactura_DetalleFactura" FromRole="Factura" ToRole="DetalleFactura" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdCategoria" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cantidad_Stock" Type="Int32" Nullable="false" />
@@ -333,26 +257,15 @@
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
-          <Property Name="IdRol" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Usuario" Relationship="dbInventarioModel.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="Telefono">
-          <Key>
-            <PropertyRef Name="IdTelefono" />
-          </Key>
-          <Property Name="IdTelefono" Type="Int32" Nullable="false" />
-          <Property Name="TelefonoCasa" Type="Int32" />
-          <Property Name="TelefonoCelular" Type="Int32" />
-          <NavigationProperty Name="Cliente" Relationship="dbInventarioModel.FK_Cliente_Telefono" FromRole="Telefono" ToRole="Cliente" />
-          <NavigationProperty Name="Telefono1" Relationship="dbInventarioModel.FK_Telefono_Telefono" FromRole="Telefono" ToRole="Telefono1" />
-          <NavigationProperty Name="Telefono2" Relationship="dbInventarioModel.FK_Telefono_Telefono" FromRole="Telefono1" ToRole="Telefono" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdRol" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cuenta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -368,30 +281,6 @@
             </Principal>
             <Dependent Role="Producto">
               <PropertyRef Name="IdCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cliente_Telefono">
-          <End Type="dbInventarioModel.Telefono" Role="Telefono" Multiplicity="1" />
-          <End Type="dbInventarioModel.Cliente" Role="Cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Telefono">
-              <PropertyRef Name="IdTelefono" />
-            </Principal>
-            <Dependent Role="Cliente">
-              <PropertyRef Name="Telefono" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Factura_Cliente">
-          <End Type="dbInventarioModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="dbInventarioModel.Factura" Role="Factura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="Id_Cliente" />
-            </Principal>
-            <Dependent Role="Factura">
-              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -431,34 +320,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Telefono_Telefono">
-          <End Type="dbInventarioModel.Telefono" Role="Telefono" Multiplicity="1" />
-          <End Type="dbInventarioModel.Telefono" Role="Telefono1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Telefono">
-              <PropertyRef Name="IdTelefono" />
-            </Principal>
-            <Dependent Role="Telefono1">
-              <PropertyRef Name="IdTelefono" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="dbInventarioModelStoreContainer" CdmEntityContainer="dbInventarioEntities">
-          <FunctionImportMapping FunctionImportName="ObtenerCategorias" FunctionName="dbInventarioModel.Store.ObtenerCategorias">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbInventarioModel.ObtenerCategorias_Result">
-                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="esActivo" ColumnName="esActivo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="dbInventarioModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
@@ -470,11 +337,12 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="dbInventarioModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Id_Cliente" ColumnName="Id_Cliente" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -492,9 +360,8 @@
           <EntitySetMapping Name="Factura">
             <EntityTypeMapping TypeName="dbInventarioModel.Factura">
               <MappingFragment StoreEntitySet="Factura">
-                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="NombreTienda" ColumnName="NombreTienda" />
                 <ScalarProperty Name="PrecioTotal" ColumnName="PrecioTotal" />
@@ -529,15 +396,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Telefono">
-            <EntityTypeMapping TypeName="dbInventarioModel.Telefono">
-              <MappingFragment StoreEntitySet="Telefono">
-                <ScalarProperty Name="TelefonoCelular" ColumnName="TelefonoCelular" />
-                <ScalarProperty Name="TelefonoCasa" ColumnName="TelefonoCasa" />
-                <ScalarProperty Name="IdTelefono" ColumnName="IdTelefono" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="dbInventarioModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
@@ -549,7 +407,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-  </EntityContainerMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

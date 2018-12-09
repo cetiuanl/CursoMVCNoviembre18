@@ -5,21 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1776fdd3f33e4b8ebae827ca44ca5a83" Name="Diagram1">
-        <EntityTypeShape EntityType="dbInventarioModel.Categoria" Width="1.5" PointX="3" PointY="6.75" />
-        <EntityTypeShape EntityType="dbInventarioModel.Cliente" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="dbInventarioModel.DetalleFactura" Width="1.5" PointX="7.5" PointY="1.375" />
-        <EntityTypeShape EntityType="dbInventarioModel.Factura" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="dbInventarioModel.Producto" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="dbInventarioModel.Rol" Width="1.5" PointX="7.75" PointY="5.25" />
-        <EntityTypeShape EntityType="dbInventarioModel.Telefono" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="dbInventarioModel.Usuario" Width="1.5" PointX="10" PointY="4.875" />
+        <EntityTypeShape EntityType="dbInventarioModel.Categoria" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="dbInventarioModel.Cliente" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbInventarioModel.DetalleFactura" Width="1.5" PointX="5.25" PointY="1.625" />
+        <EntityTypeShape EntityType="dbInventarioModel.Factura" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="dbInventarioModel.Producto" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="dbInventarioModel.Rol" Width="1.5" PointX="5.75" PointY="5.25" />
+        <EntityTypeShape EntityType="dbInventarioModel.Usuario" Width="1.5" PointX="8" PointY="4.875" />
         <AssociationConnector Association="dbInventarioModel.FK_Producto_Categoria" />
-        <AssociationConnector Association="dbInventarioModel.FK_Cliente_Telefono" />
-        <AssociationConnector Association="dbInventarioModel.FK_Factura_Cliente" />
         <AssociationConnector Association="dbInventarioModel.FK_DetalleFactura_DetalleFactura" />
         <AssociationConnector Association="dbInventarioModel.FK_DetalleFactura_Producto" />
         <AssociationConnector Association="dbInventarioModel.FK_Usuario_Rol" />
-        <AssociationConnector Association="dbInventarioModel.FK_Telefono_Telefono" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

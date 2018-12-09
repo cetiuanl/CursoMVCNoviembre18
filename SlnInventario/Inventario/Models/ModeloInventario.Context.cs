@@ -33,7 +33,6 @@ namespace Inventario.Models
         public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<Telefono> Telefono { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual ObjectResult<ObtenerCategorias_Result> ObtenerCategorias(Nullable<bool> soloActivos)
