@@ -12,17 +12,15 @@ using Inventario.Models;
 using Newtonsoft.Json;
 
 namespace Inventario.API
-{
+{    
     public class ProductosController : ApiController
     {
         private dbInventarioEntities db = new dbInventarioEntities();
-
+              
         // GET: api/Productos
         public List<Producto> GetProducto()
         {
-            var productos = db.Producto;
-
-            return productos.ToList();
+            return db.Producto.ToList();
         }
 
         // GET: api/Productos/5
