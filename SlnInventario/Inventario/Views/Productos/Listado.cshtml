@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $('#btnProducto').click( function(){
+            $('#modalNuevoProducto').dialog({                
+                modal: true
+            });
+        });
+
+        $('#btnGuardar').click(function () {
+
+            var body = JSON.stringify($('#formNuevoProducto').serializeArray());
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/api/v2/Productos',
+                data: '{\r\n        \"IdCategoria\": 1,\r\n        \"Nombre\": \"Laptop Acer Aspire 15\\\"\",\r\n        \"Cantidad_Stock\": 5,\r\n        \"Descripcion\": 1,\r\n        \"Marca\": \"Acer\",\r\n        \"Talla\": \"N\/A\",\r\n        \"PrecioMayor\": 16000,\r\n        \"PrecioDetalle\": 15000,\r\n        \"PrecioCosto\": 14000,\r\n        \"Color\": \"Plata\"\r\n    }',
+                contentType: 'application/json; charset=utf-8',
+                success: function (productosJSON) {
+                    cargarProductos();
+                }
+            });
+        });
+
+        cargarProductos();
+    });
+    
+    function cargarProductos() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/v2/Productos',
+            contentType: 'application/json; charset=utf-8',
+            success: function (productosJSON) {
+                
+                var trHTML = '';
+                $.each(productosJSON, function (i, producto) {
+                    trHTML += '<tr><td>' + producto.Nombre + '</td><td>' +
+                     producto.Cantidad_Stock + '</td><td>'
+                     + producto.Descripcion + '</td></tr>';
+                });
+                $('#tblProductos').append(trHTML);
+            }
+        });
+    }
+ </script>
+
+<h2>Listado</h2>
+
+<p>
+    <button type="button" id="btnProducto" class="btn btn-primary" >Nuevo producto</button>
+</p>
+<div id="modalNuevoProducto">
+    <form id="formNuevoProducto">
+        <p>Nombre:</p>
+        <input type="text" id="Nombre" name="Nombre" placeholder="Nombre de producto" maxlength="100" />
+        <p>Cantidad Inventario:</p>
+        <input type="text" id="Cantidad_Stock" name="Cantidad_Stock" placeholder="Cantidad de Stock de producto" />
+        <br />
+        <button type="button" id="btnGuardar">Guardar</button>
+    </form>
+</div>
+
+<table class="table" id="tblProductos">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Cantidad Stock
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Marca
+        </th>
+        <th>
+            Talla
+        </th>
+        <th>
+            PrecioMayor
+        </th>
+        <th>
+            PrecioDetalle
+        </th>
+        <th>
+            PrecioCosto
+        </th>
+        <th>
+            Color
+        </th>
+        <th>
+            Categoria
+        </th>
+        <th></th>
+    </tr>
+</table>

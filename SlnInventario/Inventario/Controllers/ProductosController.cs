@@ -128,5 +128,12 @@ namespace Inventario.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // GET: Productos/Listado
+        public ActionResult Listado()
+        {            
+            return View();
+        }
+
     }
 }
